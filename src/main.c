@@ -80,26 +80,65 @@ void update() {
 	}
 
 	if (ball_x < 0) {
-		++(player1_score[0]);
+		if (player1_score[1] == '\0') {
+			if (player1_score[0] != '9') {
+				++player1_score[0];
+			} else {
+				player1_score[0] = '1';
+				player1_score[1] = '0';
+			}
+		} else {
+			if (player1_score[1] != '9') {
+				++player1_score[1];
+			} else {
+				if (player1_score[0] == '9') {
+					player1_score[0] = '0';
+					player1_score[1] = '\0';
+				} else {
+					++player1_score[0];
+					player1_score[1] = '0';
+				}
+			}
+		}
 		restart_ball();
 	}
 
 	if (ball_x >= 160) {
-		++(player2_score[0]);
+		if (player2_score[1] == '\0') {
+			if (player2_score[0] != '9') {
+				++player2_score[0];
+			} else {
+				player2_score[0] = '1';
+				player2_score[1] = '0';
+			}
+		} else {
+			if (player2_score[1] != '9') {
+				++player2_score[1];
+			} else {
+				if (player2_score[0] == '9') {
+					player2_score[0] = '0';
+					player2_score[1] = '\0';
+				} else {
+					++player2_score[0];
+					player2_score[1] = '0';
+				}
+			}
+		}
 		restart_ball();
 	}
 
-	*DRAW_COLORS = 0x12;
+	*DRAW_COLORS = 0x02;
 	vline(79, 0, 160);
 	vline(80, 0, 160);
 
-	*DRAW_COLORS = 0x14;
+	*DRAW_COLORS = 0x04;
 	text(player1_score, 40, 30);
 	text(player2_score, 110, 30);
 
-	*DRAW_COLORS = 0x13;
+	*DRAW_COLORS = 0x03;
 	rect(player1_x, player1_y, player_width, player_height);
 	rect(player2_x, player2_y, player_width, player_height);
 
+	*DRAW_COLORS = 0x03;
 	blit(ball, ball_x, ball_y, 6, 6, BLIT_1BPP);
 }
